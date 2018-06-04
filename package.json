@@ -1,0 +1,34 @@
+{
+  "name": "sglearn-project",
+  "version": "1.0.0",
+  "description": "helper to setup, develop sglearn project",
+  "main": "index.js",
+  "scripts": {
+    "docker:network": "docker network prune -f && docker network create sam-local",
+    "docker:db": "docker run -v \"$PWD\":/dynamodb_local_db -p 3001:8000 --network sam-local cnadiminti/dynamodb-local",
+    "db:reset": "concurrently \"npm run db:start\" \"node scripts/resetDatabase.js\" ",
+    "db:init": "concurrently \"npm run db:start\" \"node scripts/initDatabase.js\" ",
+    "db:start": "npm run docker:db",
+    "start:account": "cd node_modules/@stormgle/account-base && npm run start:local",
+    "start:quiz": "cd node_modules/quiz-embed && npm start",
+    "start:learndesk": "cd node_modules/learndesk-server && npm start",
+    "start": "concurrently \"npm run db:start\" \"npm run start:account\" \"npm run start:quiz\" \"npm run start:learndesk\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duongtdn/sglearn-project.git"
+  },
+  "author": "duongtdn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/duongtdn/sglearn-project/issues"
+  },
+  "homepage": "https://github.com/duongtdn/sglearn-project#readme",
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "dotenv": "^5.0.1",
+    "@stormgle/account-base": "^1.0.0",
+    "quiz-embed": "^1.0.0",
+    "learndesk-server": "^1.0.0"
+  }
+}
