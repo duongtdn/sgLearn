@@ -1,6 +1,6 @@
 {
   "name": "sglearn-project",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "helper to setup, develop sglearn project",
   "main": "index.js",
   "scripts": {
@@ -29,6 +29,6 @@
     "dotenv": "^5.0.1",
     "@stormgle/account-base": "^1.0.0",
     "quiz-embed": "^1.0.0",
-    "learndesk-server": "^1.0.0"
+    "learndesk-content-server": "^1.0.0"
   }
 }
