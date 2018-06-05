@@ -28,6 +28,10 @@
     "concurrently": "^3.5.1",
     "dotenv": "^5.0.1",
     "@stormgle/account-base": "^1.0.0",
+    "@stormgle/userdb-dynamodb-driver": "^1.0.3",
+    "database-abstractor": "^1.0.0",
+    "enrolldb-dynamodb-driver": "^1.0.0",
+    "contentdb-dynamodb-driver": "^1.0.0",    
     "quiz-embed": "^1.0.0",
     "learndesk-content-server": "^1.0.0"
   }
