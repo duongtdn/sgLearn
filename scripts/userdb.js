@@ -1,8 +1,8 @@
 "use strict"
 
-const UserDB = require('@stormgle/userdb-api');
+const DatabaseAbstractor = require('database-abstractor');
 
-const userdb = new UserDB();
+const userdb = new DatabaseAbstractor();
 
 const db = {
   host: null,
@@ -19,7 +19,7 @@ module.exports = {
     db.host = host;
     db.port = port;
 
-    userdb.use(require('@stormgle/userdb-dynamodb')(
+    userdb.use(require('@stormgle/userdb-dynamodb-driver')(
       {
         region : 'us-west-2', 
         endpoint : `${db.host}:${db.port}`
@@ -124,6 +124,6 @@ module.exports = {
         console.log('Tester user is: tester@team.com / 123')
       }
     )
-}
+  }
 }
 

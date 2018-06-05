@@ -2,8 +2,8 @@
 
 require('dotenv').config()
 
-const host = 'http://localhost';
-const port = 3001;
+const host = process.env.DB_HOST;
+const port = process.env.DB_PORT;
 
 const userdb = require('./userdb')
 const enrolldb = require('./enrolldb')
