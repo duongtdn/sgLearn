@@ -1,0 +1,32 @@
+{
+    "name": "sgLearn",
+    "description": "sgLearn : an Incremental Reinforcement Online Training Platform",
+    "directory": {
+        "packages": {
+            "accounts": {
+                "account-base": "git+https://github.com/stormgle/account-base",
+                "auth-client": "git+https://github.com/stormgle/auth-client"
+            },
+            "database": {
+                "database-abstractor": "git+https://github.com/duongtdn/database-abstractor",
+                "database-test-helper": "git+https://github.com/duongtdn/database-test-helper",
+                "userdb-dynamodb-driver": "git+https://github.com/stormgle/userdb-dynamodb-driver",
+                "enrolldb-dynamodb-driver": "git+https://github.com/duongtdn/enrolldb-dynamodb-driver",
+                "contentdb-dynamodb-driver": "git+https://github.com/duongtdn/contentdb-dynamodb-driver"
+            },
+            "utils": {
+                "express-api-binder": "git+https://github.com/duongtdn/express-api-binder",
+                "jtoken-util": "git+https://github.com/stormgle/jtoken-util",
+                "simple-json-xhr": "git+https://github.com/duongtdn/simple-json-xhr"
+            },
+            "learndesk": {
+                "learndesk-web": "git+https://github.com/duongtdn/learndesk-web",
+                "content-presenter": "git+https://github.com/duongtdn/content-presenter",
+                "youtube-player-plugin": "git+https://github.com/duongtdn/youtube-player-plugin",
+                "quiz-player-plugin": "git+https://github.com/duongtdn/quiz-player-plugin",
+                "quiz-embed": "git+https://github.com/duongtdn/quiz-embed",
+                "learndesk-content-server": "git+https://github.com/duongtdn/learndesk-content-server"
+            }
+        }        
+    }
+}

@@ -4,6 +4,7 @@
   "description": "helper to setup, develop sglearn project",
   "main": "index.js",
   "scripts": {
+    "setup": "node scripts/setup.js",
     "docker:network": "docker network prune -f && docker network create sam-local",
     "docker:db": "docker run -v \"$PWD\":/dynamodb_local_db -p 3001:8000 --network sam-local cnadiminti/dynamodb-local",
     "db:reset": "concurrently \"npm run db:start\" \"node scripts/resetDatabase.js\" ",
