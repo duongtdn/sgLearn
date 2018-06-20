@@ -66,6 +66,7 @@ class Project {
   }
 
   _cloneRepo(url) {    
+    console.log('')
     git.cloneSync(url.split('+').pop());
   }
 
@@ -85,7 +86,7 @@ class Project {
   _linkDependency() {
     this._modules.forEach(module => {
       process.chdir(module);
-      console.log(`\nLinking local dependency for module ${module.split('/').pop()}`)
+      console.log(`\nLinking local dependencies for module ${module.split('/').pop()}`)
       const dependencies =  this._parseDependency();      
       let _noLink = true;
       dependencies.forEach(dep => {
@@ -95,7 +96,7 @@ class Project {
         }
       })
       if (_noLink) {
-        console.log('No local dependency')
+        console.log('   -> No local dependency')
       }
     })
     return this;
