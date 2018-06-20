@@ -2,6 +2,7 @@
 
 const fs = require('fs')
 const git = require('./git')
+const npm = require('./npm')
 
 class Project {
 
@@ -18,6 +19,7 @@ class Project {
 
     this._rootDir = './';
     this._modules = [];
+    this._symlinks = [];
 
   }
 
@@ -50,7 +52,7 @@ class Project {
         this._modules.push(`${process.cwd()}/${name}`);
       }
     }
-    process.chdir('../');
+    process.chdir('../');    
   }
 
   _createFolder(name) {
@@ -72,64 +74,88 @@ class Project {
 
   createSymlink() {  
     console.log('');
-    this._createGlobalSymlinksForModules()._linkDependency();
-  }
 
-  _createGlobalSymlinksForModules() {
     this._modules.forEach(module => {
-      process.chdir(module);
-      console.log(`Creating symlink for ${module.split('/').pop()}`)
-    })    
-    return this;
-  }
-
-  _linkDependency() {
-    this._modules.forEach(module => {
-      process.chdir(module);
-      console.log(`\nLinking local dependencies for module ${module.split('/').pop()}`)
-      const dependencies =  this._parseDependency();      
-      let _noLink = true;
-      dependencies.forEach(dep => {
-        if (this._isLinkingModule(dep)) {
-          _noLink = false;
-          console.log(`   -> Linking ${dep} to module ${module.split('/').pop()}`)
-        }
-      })
-      if (_noLink) {
-        console.log('   -> No local dependency')
-      }
+        process.chdir(module);
+        // clean package-lock.json if any
+        if (fs.existsSync('package-lock.json')) {
+          fs.unlinkSync('package-lock.json');
+          console.log('Removed package-lock.json')
+        }        
     })
-    return this;
+
+    this._modules.forEach(module => {
+      // recursively create symlink for all dependency
+      this._recursiveCreateSymlink(this._getModuleName(module));
+    })
   }
 
-  _parseDependency() {
-    const fp = fs.readFileSync('package.json');
+  _recursiveCreateSymlink(module) {    
+    if (this._symlinks.indexOf(module) !== -1) {
+      return
+    }
+    const dependencies = this._parseLocalDependency(this._getModuleInstallPath(module));
+    if (dependencies.length > 0) {      
+      dependencies.forEach(dep => {
+        this._recursiveCreateSymlink(dep)        
+      })      
+      process.chdir(this._getModuleInstallPath(module))
+      console.log(`Create symlink to local dependencies for ${module}`)
+      dependencies.forEach(dep => {
+        console.log(`   -> ${dep}`)
+        npm.link(dep);        
+      })      
+      console.log(`Create global symlink for ${module}`)      
+      npm.link();
+      this._symlinks.push(module);
+      console.log(`Install dependencies for ${module}`);
+      npm.install();
+    } else {    
+      console.log(`Create global symlink for ${module}`)
+      process.chdir(this._getModuleInstallPath(module))
+      npm.link();
+      this._symlinks.push(module);
+      console.log(`Install dependencies for ${module}`);
+      npm.install();       
+    }      
+  }
+
+  _getModuleInstallPath(name) {
+    for (let i = 0; i < this._modules.length; i++) {
+      const module = this._modules[i];
+      if(this._getModuleName(module) === name) {        
+        return module
+      }
+    }
+  }
+
+  _parseLocalDependency(module) {
+    const fp = fs.readFileSync(`${module}/package.json`);
     if (!fp) {
-      throw new Error(`Error: Could not find package.json at ${process.cwd()}/`);
+      throw new Error(`Error: Could not find package.json at ${module}/`);
     }
 
     const config = JSON.parse(fp);
 
-    const dependencies = [];
+    const dependencies = [];    
 
     if (config && config.dependencies) {
       for (let dep in config.dependencies) {
-        dependencies.push(dep);
+        this._isLocalModules(dep) && dependencies.push(dep);
       }
     }
 
     if (config && config.devDependencies) {
       for (let dep in config.devDependencies) {
-        dependencies.push(dep);
+        this._isLocalModules(dep) && dependencies.push(dep);
       }
     }
-
     return dependencies;
   }
 
-  _isLinkingModule(dep) {
-    return this._modules.some(module => {            
-      return this._getModuleName(module) === dep
+  _isLocalModules(module) {
+    return this._modules.some(_module => {            
+      return this._getModuleName(_module) === module
     })
   }
 
@@ -141,6 +167,7 @@ class Project {
       throw new Error(`Error: Could not find package.json at ${module}/`);
     }
     const config = JSON.parse(fp);
+    process.chdir(cwd);
     return config.name; 
   }
 
