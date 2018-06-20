@@ -7,7 +7,8 @@
                 "account-base": "git+https://github.com/stormgle/account-base",
                 "auth-client": "git+https://github.com/stormgle/auth-client",
                 "jtoken-util": "git+https://github.com/stormgle/jtoken-util",
-                "userdb-dynamodb-driver": "git+https://github.com/stormgle/userdb-dynamodb-driver"
+                "userdb-dynamodb-driver": "git+https://github.com/stormgle/userdb-dynamodb-driver",
+                "userdb-test-helper": "git+https://github.com/stormgle/userdb-test-helper"
             },
             "database": {
                 "database-abstractor": "git+https://github.com/duongtdn/database-abstractor",

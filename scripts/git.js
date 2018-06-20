@@ -28,12 +28,15 @@ function clone(url) {
 function cloneSync(url) {
   const repo = url.split('/').pop();
 
+  console.log(`Cloning ${repo} from ${url}`)
+
   if (fs.existsSync(repo)) {
     console.log(`${repo} exist`);
     return this;
   }
 
   const proc = spawnSync('git', ['clone', url]);
+  console.log(`Cloned ${repo}`)
 
   return this;
 }
