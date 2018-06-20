@@ -12,7 +12,7 @@ function clone(url) {
   const repo = url.split('/').pop();
 
   if (fs.existsSync(repo)) {
-    console.log(`${repo} exist\n`);
+    console.log(`${repo} exist`);
     return this;
   }
 
@@ -29,7 +29,7 @@ function cloneSync(url) {
   const repo = url.split('/').pop();
 
   if (fs.existsSync(repo)) {
-    console.log(`${repo} exist\n`);
+    console.log(`${repo} exist`);
     return this;
   }
 

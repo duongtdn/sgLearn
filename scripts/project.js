@@ -71,7 +71,8 @@ class Project {
     git.cloneSync(repo)
   }
 
-  createSymlink() {    
+  createSymlink() {  
+    console.log('');
     this._createGlobalSymlinksForModules()._linkDependency();
   }
 
@@ -84,16 +85,20 @@ class Project {
   }
 
   _linkDependency() {
-    console.log('')
     this._modules.forEach(module => {
       process.chdir(module);
-      console.log(`Linking dependency for module ${module.split('/').pop()}`)
+      console.log(`\nLinking local dependency for module ${module.split('/').pop()}`)
       const dependencies =  this._parseDependency();      
+      let _noLink = true;
       dependencies.forEach(dep => {
         if (this._isLinkingModule(dep)) {
+          _noLink = false;
           console.log(`   -> Linking ${dep} to module ${module.split('/').pop()}`)
         }
       })
+      if (_noLink) {
+        console.log('No local dependency')
+      }
     })
     return this;
   }
