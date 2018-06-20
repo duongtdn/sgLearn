@@ -66,9 +66,7 @@ class Project {
   }
 
   _cloneRepo(url) {    
-    const repo = url.split('+').pop();
-    console.log('Cloning ' + repo)
-    git.cloneSync(repo)
+    git.cloneSync(url.split('+').pop());
   }
 
   createSymlink() {  
@@ -106,7 +104,7 @@ class Project {
   _parseDependency() {
     const fp = fs.readFileSync('package.json');
     if (!fp) {
-      throw new Error("Error: Could not find package.json");
+      throw new Error(`Error: Could not find package.json at ${process.cwd()}/`);
     }
 
     const config = JSON.parse(fp);
@@ -129,9 +127,20 @@ class Project {
   }
 
   _isLinkingModule(dep) {
-    return this._modules.some(module => {      
-      return module.split('/').pop() === dep
+    return this._modules.some(module => {            
+      return this._getModuleName(module) === dep
     })
+  }
+
+  _getModuleName(module) {
+    const cwd = process.cwd();
+    process.chdir(module)
+    const fp = fs.readFileSync('package.json');
+    if (!fp) {
+      throw new Error(`Error: Could not find package.json at ${module}/`);
+    }
+    const config = JSON.parse(fp);
+    return config.name; 
   }
 
   _findDir(dir) {    
