@@ -15,7 +15,7 @@ const project = new Project();
 project
   .root(`${process.env.HOME}/work/`)
   .download()
-  .createSymlink();
+  .install();
 
 console.log('\nSetup completed\n');
 

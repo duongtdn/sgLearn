@@ -72,7 +72,7 @@ class Project {
     git.cloneSync(url.split('+').pop());
   }
 
-  createSymlink() {  
+  install() {  
     console.log('');
 
     this._modules.forEach(module => {
