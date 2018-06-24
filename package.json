@@ -10,9 +10,11 @@
     "db:reset": "concurrently \"npm run db:start\" \"node scripts/resetDatabase.js\" ",
     "db:init": "concurrently \"npm run db:start\" \"node scripts/initDatabase.js\" ",
     "db:start": "npm run docker:db",
-    "start:account": "cd node_modules/@stormgle/account-base && npm run start:local",
     "start:quiz": "cd node_modules/quiz-embed && npm start",
     "start:learndesk": "cd node_modules/learndesk-server && npm start",
+
+    "start:account": "cd node_modules/@stormgle/account-base && npm run start:local",
+    "start:content": "cd node_modules/content-server && npm run start:local",
     "start": "concurrently \"npm run db:start\" \"npm run start:account\" \"npm run start:quiz\" \"npm run start:learndesk\" "
   },
   "repository": {
@@ -29,10 +31,7 @@
     "concurrently": "^3.5.1",
     "dotenv": "^5.0.1",
     "@stormgle/account-base": "^1.0.0",
-    "@stormgle/userdb-dynamodb-driver": "^1.0.3",
-    "database-abstractor": "^1.0.0",
-    "enrolldb-dynamodb-driver": "^1.0.0",
-    "contentdb-dynamodb-driver": "^1.0.0",    
+    "content-server": "^1.0.0",    
     "quiz-embed": "^1.0.0",
     "learndesk-content-server": "^1.0.0"
   }
