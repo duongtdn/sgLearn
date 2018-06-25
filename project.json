@@ -28,7 +28,9 @@
             },
             "sglearn": {
                 "enrolldb-dynamodb-driver": "git+https://github.com/duongtdn/enrolldb-dynamodb-driver",
-                "contentdb-dynamodb-driver": "git+https://github.com/duongtdn/contentdb-dynamodb-driver"
+                "content-server": "git+https://github.com/duongtdn/content-server",
+                "contentdb-dynamodb-driver": "git+https://github.com/duongtdn/contentdb-dynamodb-driver",
+                "contentdb-test-helper": "git+https://github.com/duongtdn/contentdb-test-helper"
             }
         }        
     }
