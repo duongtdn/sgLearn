@@ -12,10 +12,10 @@
     "db:start": "npm run docker:db",
     "start:quiz": "cd node_modules/quiz-embed && npm start",
     "start:learndesk": "cd node_modules/learndesk-server && npm start",
-
-    "start:account": "cd node_modules/@stormgle/account-base && npm run start:local",
-    "start:content": "cd node_modules/content-server && npm run start:local",
-    "start": "concurrently \"npm run db:start\" \"npm run start:account\" \"npm run start:quiz\" \"npm run start:learndesk\" "
+    "start:account": "cd node_modules/@stormgle/account-base && npm run local",
+    "start:content": "cd node_modules/content-server && npm run local",
+    "start:enroll": "cd node_modules/enroll-server && npm run local",
+    "start": "concurrently \"npm run start:account\" \"npm run start:content\" \"npm run start:enroll\" "
   },
   "repository": {
     "type": "git",
@@ -30,9 +30,8 @@
   "devDependencies": {
     "concurrently": "^3.5.1",
     "dotenv": "^5.0.1",
-    "@stormgle/account-base": "^1.0.0",
-    "content-server": "^1.0.0",    
-    "quiz-embed": "^1.0.0",
-    "learndesk-content-server": "^1.0.0"
+    "@stormgle/account-base": "^2.3.0",
+    "content-server": "^1.0.0",
+    "enroll-server": "^1.0.0"
   }
 }
