@@ -88,6 +88,48 @@ class Project {
       // recursively create symlink for all dependency
       this._recursiveCreateSymlink(this._getModuleName(module));
     })
+
+    this._createLocalSymlinkToProject()._installProjectDependencies();
+
+  }
+
+  _createLocalSymlinkToProject() {
+
+    console.log('\nLinking local depedencies to the project\n');
+
+    process.chdir(`${__dirname}/../`)
+
+    const fp = fs.readFileSync('package.json');
+    if (!fp) {
+      throw new Error('missing package.json');
+    }
+
+    const pck = JSON.parse(fp)
+
+    const deps = { ...pck.dependencies, ...pck.devDependencies }
+
+    for (let module in deps) {
+      this._isLocalModules(module) && npm.link(module);
+    }
+
+    console.log('Linked local depedencies to the project');
+
+    return this;
+
+  }
+
+  _installProjectDependencies() {
+    console.log('\nInstalling local depedencies to the project\n');
+    process.chdir(`${__dirname}/../`)
+
+    if (fs.existsSync('package-lock.json')) {
+      fs.unlinkSync('package-lock.json');
+      console.log('Removed package-lock.json')
+    }
+
+    npm.install();
+    console.log('Installed depedencies to the project');
+    return this;
   }
 
   _recursiveCreateSymlink(module) {    
