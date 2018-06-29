@@ -5,18 +5,13 @@
   "main": "index.js",
   "scripts": {
     "setup": "node scripts/setup.js",
-    "docker:network": "docker network prune -f && docker network create sam-local",
-    "docker:db": "docker run -v \"$PWD\":/dynamodb_local_db -p 3001:8000 --network sam-local cnadiminti/dynamodb-local",
-    "db:reset": "concurrently \"npm run db:start\" \"node scripts/resetDatabase.js\" ",
-    "db:init": "concurrently \"npm run db:start\" \"node scripts/initDatabase.js\" ",
-    "db:start": "npm run docker:db",
-    "start:quiz": "cd node_modules/quiz-embed && npm start",
     "start:learndesk:server": "cd node_modules/learndesk-content-server && npm start",
     "start:learndesk:web": "cd node_modules/learndesk-web && npm start",
+    "start:quiz": "cd node_modules/quiz-embed && npm start",
     "start:account": "cd node_modules/@stormgle/account-base && npm run local",
     "start:content": "cd node_modules/content-server && npm run local",
     "start:enroll": "cd node_modules/enroll-server && npm run local",
-    "start": "concurrently \"npm run start:account\" \"npm run start:content\" \"npm run start:enroll\" \"npm run start:learndesk:server\" \"npm run start:learndesk:web\" "
+    "start": "concurrently \"npm run start:account\" \"npm run start:content\" \"npm run start:enroll\" \"npm run start:learndesk:server\" \"npm run start:learndesk:web\" \"npm run start:quiz\" "
   },
   "repository": {
     "type": "git",
@@ -35,6 +30,7 @@
     "content-server": "^1.0.0",
     "enroll-server": "^1.0.0",
     "learndesk-content-server": "^1.0.0",
-    "learndesk-web": "^1.0.0"
+    "learndesk-web": "^1.0.0",
+    "quiz-embed": "^0.1.1"
   }
 }
