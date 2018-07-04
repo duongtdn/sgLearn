@@ -20,6 +20,7 @@ class Project {
     this._rootDir = './';
     this._modules = [];
     this._symlinks = [];
+    this.__asyncTasks = [];
 
   }
 
@@ -28,17 +29,22 @@ class Project {
     return this
   }
 
-  download() {
+  async download() {
+    
 
     if (!this._dir) {
       throw new Error("Error: Directory structure is not found!");
     }    
 
+    console.log('\nDownloading source code from reposistories...\n');
+
     process.chdir(this._rootDir);
+
+    this.__asyncTasks = [];
 
     this._downloadModules(this._dir);
 
-    return this;
+    return await Promise.all(this.__asyncTasks);    
 
   }
 
@@ -48,7 +54,7 @@ class Project {
         this._createFolder(name)
         this._downloadModules(path[name])
       } else {
-        this._cloneRepo(path[name]);
+        this.__asyncTasks.push(this._cloneRepo(path[name]));
         this._modules.push(`${process.cwd()}/${name}`);
       }
     }
@@ -58,17 +64,15 @@ class Project {
   _createFolder(name) {    
     if (fs.existsSync(name)) {
       console.log(`\n${name} exist`);
-      process.chdir(name);
-      return this
-    }
-    console.log('\nCreating folder ' + name)
-    fs.mkdirSync(name);
+    } else {
+      console.log('Creating folder ' + name)
+      fs.mkdirSync(name);
+    }    
     process.chdir(name);
     return this
   }
 
-  _cloneRepo(url) {    
-    console.log('')
+  _cloneRepo(url) {        
     return git.clone(url.split('+').pop());
   }
 
