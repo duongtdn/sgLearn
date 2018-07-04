@@ -8,6 +8,8 @@
 const { spawn, spawnSync } = require('child_process');
 const fs = require('fs');
 
+const config = require('./config')
+
 function clone(url) {
   const repo = url.split('/').pop();  
 
@@ -15,8 +17,9 @@ function clone(url) {
 
     if (fs.existsSync(repo)) {
       console.log(`${repo} exist`);
-      fetch()
-        .then(pull)
+      const path = `${process.cwd()}/${repo}`;
+      fetch(path)
+        .then(() => pull(path))
         .then(resolve)
         .catch(reject)
 
@@ -54,35 +57,43 @@ function cloneSync(url) {
   return this;
 }
 
-function fetch() {
+function fetch(path) {
   return new Promise((resolve, reject) => {
+    const cwd = process.cwd();
+    process.chdir(path);
     const proc = spawn('git', ['fetch']);
-    proc.stdout.on('data', (data) => console.log(`${data}`));
+    process.chdir(cwd);
+    if (config.__verbose) {
+      proc.stdout.on('data', (data) => console.log(`${data}`));
       proc.stderr.on('data', (data) => console.log(`${data}`));
       proc.on('close', code => {
         if (code === 0) {
-          console.log(`Fetched`)
           resolve(code)
         } else {
           reject(code)
         }
       }); 
+    }
   })
 }
 
-function pull() {
+function pull(path) {
   return new Promise((resolve, reject) => {
+    const cwd = process.cwd();
+    process.chdir(path);
     const proc = spawn('git', ['pull']);
-    proc.stdout.on('data', (data) => console.log(`${data}`));
+    process.chdir(cwd);
+    if (config.__verbose) {
+      proc.stdout.on('data', (data) => console.log(`${data}`));
       proc.stderr.on('data', (data) => console.log(`${data}`));
       proc.on('close', code => {
         if (code === 0) {
-          console.log(`Updated`)
           resolve(code)
         } else {
           reject(code)
         }
       }); 
+    }
   })
 }
 
