@@ -22,7 +22,6 @@ function clone(url) {
         .then(() => pull(path))
         .then(resolve)
         .catch(reject)
-
     } else {
       const proc = spawn('git', ['clone', url]);
       if (config.__verbose) {
@@ -38,7 +37,6 @@ function clone(url) {
         }); 
       }
     }    
-
   })  
 
 }
