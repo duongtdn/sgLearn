@@ -25,16 +25,18 @@ function clone(url) {
 
     } else {
       const proc = spawn('git', ['clone', url]);
-      proc.stdout.on('data', (data) => console.log(`${data}`));
-      proc.stderr.on('data', (data) => console.log(`${data}`));
-      proc.on('close', code => {
-        if (code === 0) {
-          console.log(`Cloned ${repo}`)
-          resolve(code)
-        } else {
-          reject(code)
-        }
-      }); 
+      if (config.__verbose) {
+        proc.stdout.on('data', (data) => console.log(`${data}`));
+        proc.stderr.on('data', (data) => console.log(`${data}`));
+        proc.on('close', code => {
+          if (code === 0) {
+            console.log(`Cloned ${repo}`)
+            resolve(code)
+          } else {
+            reject(code)
+          }
+        }); 
+      }
     }    
 
   })  
