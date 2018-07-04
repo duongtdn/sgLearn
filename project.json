@@ -32,7 +32,7 @@
                     "contentdb-dynamodb-driver": "git+https://github.com/duongtdn/contentdb-dynamodb-driver",
                     "contentdb-test-helper": "git+https://github.com/duongtdn/contentdb-test-helper"
                 },
-                "entroll": {
+                "enroll": {
                     "enroll-server": "git+https://github.com/duongtdn/enroll-server",
                     "enrolldb-dynamodb-driver": "git+https://github.com/duongtdn/enrolldb-dynamodb-driver",
                     "enrolldb-test-helper": "git+https://github.com/duongtdn/enrolldb-test-helper"
