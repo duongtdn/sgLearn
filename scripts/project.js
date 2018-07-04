@@ -48,20 +48,20 @@ class Project {
         this._createFolder(name)
         this._downloadModules(path[name])
       } else {
-        this._cloneRepo(path[name])        
+        this._cloneRepo(path[name]);
         this._modules.push(`${process.cwd()}/${name}`);
       }
     }
     process.chdir('../');    
   }
 
-  _createFolder(name) {
-    console.log('\nCreating folder ' + name)
+  _createFolder(name) {    
     if (fs.existsSync(name)) {
-      console.log(`${name} exist\n`);
+      console.log(`\n${name} exist`);
       process.chdir(name);
       return this
     }
+    console.log('\nCreating folder ' + name)
     fs.mkdirSync(name);
     process.chdir(name);
     return this
@@ -69,7 +69,7 @@ class Project {
 
   _cloneRepo(url) {    
     console.log('')
-    git.cloneSync(url.split('+').pop());
+    return git.clone(url.split('+').pop());
   }
 
   install() {  
