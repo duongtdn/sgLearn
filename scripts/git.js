@@ -16,7 +16,7 @@ function clone(url) {
   return new Promise((resolve, reject) => {
 
     if (fs.existsSync(repo)) {
-      console.log(`${repo} exist`);
+      config.__verbose && console.log(`${repo} exist`);
       const path = `${process.cwd()}/${repo}`;
       fetch(path)
         .then(() => pull(path))
