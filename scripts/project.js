@@ -38,16 +38,27 @@ class Project {
       throw new Error("Error: Directory structure is not found!");
     }    
 
-    console.log('\nDownloading source code from reposistories...\n');
+    console.log('\nDownloading/Updating local packages from reposistories...\n');
 
     process.chdir(this._rootDir);
 
+    await this._download(this._dir);
+
+    console.log('\nDownload/Update completed\n')
+
+    /* thenable return for compatible with async/await */
+    return { 
+      then(resolve, reject){
+        resolve();
+      } 
+    }   
+
+  }
+
+  async _download(path) {
     this.__asyncTasks = [];
-
-    this._downloadModules(this._dir);
-
-    return await Promise.all(this.__asyncTasks);    
-
+    this._downloadModules(path);
+    await Promise.all(this.__asyncTasks);  
   }
 
   _downloadModules(path) {
@@ -56,6 +67,7 @@ class Project {
         this._createFolder(name)
         this._downloadModules(path[name])
       } else {
+        console.log(` ---> Updating ${name}...`)
         this.__asyncTasks.push(this._cloneRepo(path[name]));
         this._modules.push(`${process.cwd()}/${name}`);
       }
@@ -78,7 +90,7 @@ class Project {
     return git.clone(url.split('+').pop());
   }
 
-  install() {  
+  async install() {  
     console.log('');
 
     this._modules.forEach(module => {
@@ -95,15 +107,15 @@ class Project {
       this._recursiveBuildSymlinkList(this._getModuleName(module));
     })
 
-    this._linkLocalDependencies();
+    await this._linkDependencies();
 
-    // this._createLocalSymlinkToProject()._installProjectDependencies();
+    this._createLocalSymlinkToProject()._installProjectDependencies();
 
   }
 
   _createLocalSymlinkToProject() {
 
-    console.log('\nLinking local depedencies to the project\n');
+    console.log('Linking local depedencies to the project');
 
     process.chdir(`${__dirname}/../`)
 
@@ -117,6 +129,7 @@ class Project {
     const deps = { ...pck.dependencies, ...pck.devDependencies }
 
     for (let module in deps) {
+      console.log(` ---> Linking to local module: ${module}`)
       this._isLocalModules(module) && npm.linkSync(module);
     }
 
@@ -146,7 +159,6 @@ class Project {
     }
         
     const dependencies = this._parseLocalDependency(this._getModuleInstallPath(module));
-    // process.chdir(this._getModuleInstallPath(module))
 
     if (dependencies.length > 0) {      
       dependencies.forEach(dep => {
@@ -157,20 +169,32 @@ class Project {
     return
   }
 
-  _linkLocalDependencies() {
+  async _linkDependencies() {
     for(let i = 0; i < this._symlinks.length; i++) {
-      console.log(`Create Global Symlink to ${this._symlinks[i]}`)
-      this._link(this._symlinks[i])
+      const module = this._symlinks[i]
+      process.chdir(this._getModuleInstallPath(module))
+      console.log(`Create Global Symlink to ${module}`)
+      await this._linkLocalDependencies(module)
+      npm.linkSync();
+    }
+    /* thenable return for compatible with async/await */
+    return { 
+      then(resolve, reject){
+        resolve();
+      } 
     }
   }
 
-  _link(module) {
+  _linkLocalDependencies(module) {
     const path = this._getModuleInstallPath(module);
     process.chdir(path);
     const dependencies = this._parseLocalDependency(path);
+    const __tasks = [];
     dependencies.forEach(dep => {
       console.log(` ---> Linking to local module: ${dep}`)
+      __tasks.push(npm.link(dep)) 
     })
+    return Promise.all(__tasks)
   }
 
   _getModuleInstallPath(name) {

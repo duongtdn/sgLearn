@@ -26,7 +26,7 @@ function clone(url) {
       const proc = spawn('git', ['clone', url]);
       proc.on('close', code => {
         if (code === 0) {
-          console.log(`Cloned ${repo}`)
+          console.log(` ---> Cloned ${repo}`)
           resolve(code)
         } else {
           reject(code)

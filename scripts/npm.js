@@ -41,9 +41,9 @@ function install() {
     })
 
     if (config.__verbose) {
-      proc.stdout.on('data', (data) => console.log(`${data}`));     
+      p.stdout.on('data', (data) => console.log(`${data}`));     
     }
-    proc.stderr.on('data', (data) => console.log(`${data}`));
+    p.stderr.on('data', (data) => console.log(`${data}`));
     
   })
 }
@@ -55,7 +55,6 @@ function link(module) {
     const p = spawn('npm', command);
     p.on('close', code => {
       if (code === 0) {
-        console.log('\n\nDone linking module: ' + module)
         resolve(code)
       } else {
         reject(code)

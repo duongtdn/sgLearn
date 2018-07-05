@@ -1,5 +1,3 @@
-"use strict"
-
 /**
  * Setup Process
  *  - Set root
@@ -8,13 +6,8 @@
  *  - install all dependency modules in each package 
  */
 
-
-// project
-//   .root(`${process.env.HOME}/work/`)
-//   .download().then(() => console.log('\n\nSetup completed\n'))
-//   // .install();
-
-async function setup() {
+(async function setup() {
+  "use strict"
   const Project = require('./project')
 
   const project = new Project();
@@ -23,16 +16,10 @@ async function setup() {
 
   await  project.download()  
 
-  console.log('Download completed\n')
-
   await project.install()
 
   console.log('\n\nSetup completed\n')
 
-}
-
-setup()
-
-// console.log('\n\n* ----------------- * -------------------- *\n');
+})();
 
 
