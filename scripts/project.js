@@ -4,6 +4,8 @@ const fs = require('fs')
 const git = require('./git')
 const npm = require('./npm')
 
+const config = require('./config')
+
 class Project {
 
   constructor(file) {
@@ -63,9 +65,9 @@ class Project {
 
   _createFolder(name) {    
     if (fs.existsSync(name)) {
-      console.log(`\n${name} exist`);
+      config.__verbose && console.log(`\n${name} exist`);
     } else {
-      console.log('Creating folder ' + name)
+      config.__verbose && console.log('Creating folder ' + name)
       fs.mkdirSync(name);
     }    
     process.chdir(name);
@@ -84,16 +86,18 @@ class Project {
         // clean package-lock.json if any
         if (fs.existsSync('package-lock.json')) {
           fs.unlinkSync('package-lock.json');
-          console.log('Removed package-lock.json')
+          config.__verbose && console.log('Removed package-lock.json')
         }        
     })
 
     this._modules.forEach(module => {
       // recursively create symlink for all dependency
-      this._recursiveCreateSymlink(this._getModuleName(module));
+      this._recursiveBuildSymlinkList(this._getModuleName(module));
     })
 
-    this._createLocalSymlinkToProject()._installProjectDependencies();
+    this._linkLocalDependencies();
+
+    // this._createLocalSymlinkToProject()._installProjectDependencies();
 
   }
 
@@ -113,7 +117,7 @@ class Project {
     const deps = { ...pck.dependencies, ...pck.devDependencies }
 
     for (let module in deps) {
-      this._isLocalModules(module) && npm.link(module);
+      this._isLocalModules(module) && npm.linkSync(module);
     }
 
     console.log('Linked local depedencies to the project');
@@ -128,7 +132,7 @@ class Project {
 
     if (fs.existsSync('package-lock.json')) {
       fs.unlinkSync('package-lock.json');
-      console.log('Removed package-lock.json')
+      config.__verbose && console.log('Removed package-lock.json')
     }
 
     npm.install();
@@ -136,34 +140,37 @@ class Project {
     return this;
   }
 
-  _recursiveCreateSymlink(module) {    
+  _recursiveBuildSymlinkList(module) {    
     if (this._symlinks.indexOf(module) !== -1) {
       return
     }
+        
     const dependencies = this._parseLocalDependency(this._getModuleInstallPath(module));
+    // process.chdir(this._getModuleInstallPath(module))
+
     if (dependencies.length > 0) {      
       dependencies.forEach(dep => {
-        this._recursiveCreateSymlink(dep)        
-      })      
-      process.chdir(this._getModuleInstallPath(module))
-      console.log(`Create symlink to local dependencies for ${module}`)
-      dependencies.forEach(dep => {
-        console.log(`   -> ${dep}`)
-        npm.link(dep);        
-      })      
-      console.log(`Create global symlink for ${module}`)      
-      npm.link();
-      this._symlinks.push(module);
-      console.log(`Install dependencies for ${module}`);
-      npm.install();
-    } else {    
-      console.log(`Create global symlink for ${module}`)
-      process.chdir(this._getModuleInstallPath(module))
-      npm.link();
-      this._symlinks.push(module);
-      console.log(`Install dependencies for ${module}`);
-      npm.install();       
-    }      
+        this._recursiveBuildSymlinkList(dep)        
+      })                  
+    }
+    this._symlinks.push(module);
+    return
+  }
+
+  _linkLocalDependencies() {
+    for(let i = 0; i < this._symlinks.length; i++) {
+      console.log(`Create Global Symlink to ${this._symlinks[i]}`)
+      this._link(this._symlinks[i])
+    }
+  }
+
+  _link(module) {
+    const path = this._getModuleInstallPath(module);
+    process.chdir(path);
+    const dependencies = this._parseLocalDependency(path);
+    dependencies.forEach(dep => {
+      console.log(` ---> Linking to local module: ${dep}`)
+    })
   }
 
   _getModuleInstallPath(name) {

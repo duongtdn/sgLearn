@@ -23,12 +23,16 @@ async function setup() {
 
   await  project.download()  
 
+  console.log('Download completed\n')
+
+  await project.install()
+
   console.log('\n\nSetup completed\n')
 
 }
 
 setup()
 
-console.log('\n\n* ----------------- * -------------------- *\n');
+// console.log('\n\n* ----------------- * -------------------- *\n');
 
 
