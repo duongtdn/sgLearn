@@ -33,9 +33,9 @@ function clone(url) {
         }
       });
       if (config.__verbose) {
-        proc.stdout.on('data', (data) => console.log(`${data}`));
-        proc.stderr.on('data', (data) => console.log(`${data}`));         
+        proc.stdout.on('data', (data) => console.log(`${data}`));                 
       }
+      proc.stderr.on('data', (data) => console.log(`${data}`));
     }    
   })  
 
@@ -74,10 +74,9 @@ function fetch(path) {
     }); 
 
     if (config.__verbose) {
-      proc.stdout.on('data', (data) => console.log(`${data}`));
-      proc.stderr.on('data', (data) => console.log(`${data}`));
+      proc.stdout.on('data', (data) => console.log(`${data}`));      
     }
-
+    proc.stderr.on('data', (data) => console.log(`${data}`));
   })
 }
 
@@ -99,8 +98,8 @@ function pull(path) {
     
     if (config.__verbose) {
       proc.stdout.on('data', (data) => console.log(`${data}`));
-      proc.stderr.on('data', (data) => console.log(`${data}`));
     }
+    proc.stderr.on('data', (data) => console.log(`${data}`));
   })
 }
 
