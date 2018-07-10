@@ -40,7 +40,9 @@
                 "course": {
                     "course-server": "git+https://github.com/duongtdn/course-server",
                     "coursedb-dynamodb-driver": "git+https://github.com/duongtdn/coursedb-dynamodb-driver",
-                    "coursedb-test-helper": "git+https://github.com/duongtdn/coursedb-test-helper"
+                    "coursedb-test-helper": "git+https://github.com/duongtdn/coursedb-test-helper",
+                    "catalogdb-dynamodb-driver": "git+https://github.com/duongtdn/catalogdb-dynamodb-driver",
+                    "catalogdb-test-helper": "git+https://github.com/duongtdn/catalogdb-test-helper"
                 }
             }
         }        
