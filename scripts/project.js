@@ -67,7 +67,7 @@ class Project {
         this._createFolder(name)
         this._downloadModules(path[name])
       } else {
-        console.log(` ---> Updating ${name}...`)
+        console.log(`Updating ${name}...\n`)
         this.__asyncTasks.push(this._cloneRepo(path[name]));
         this._modules.push(`${process.cwd()}/${name}`);
       }

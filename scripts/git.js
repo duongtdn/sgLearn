@@ -18,15 +18,27 @@ function clone(url) {
     if (fs.existsSync(repo)) {
       config.__verbose && console.log(`${repo} exist`);
       const path = `${process.cwd()}/${repo}`;
-      fetch(path)
-        .then(() => pull(path))
+      _fetch(path)
+        .then(() => _pull(path))
+        .then(() => _storeCredential(path))
         .then(resolve)
         .catch(reject)
     } else {
-      const proc = spawn('git', ['clone', url]);
+      const path = `${process.cwd()}/${repo}`;
+      _clone(url)
+      .then(() => _storeCredential(path))
+      .then(resolve)
+      .catch(reject)
+    }    
+  })  
+
+}
+
+function _clone(url) {
+  return new Promise((resolve, reject) => {
+    const proc = spawn('git', ['clone', url]);
       proc.on('close', code => {
         if (code === 0) {
-          console.log(` ---> Cloned ${repo}`)
           resolve(code)
         } else {
           reject(code)
@@ -36,10 +48,9 @@ function clone(url) {
         proc.stdout.on('data', (data) => console.log(`${data}`));                 
       }
       proc.stderr.on('data', (data) => console.log(`${data}`));
-    }    
-  })  
-
+  })
 }
+
 
 function cloneSync(url) {
   const repo = url.split('/').pop();
@@ -57,7 +68,7 @@ function cloneSync(url) {
   return this;
 }
 
-function fetch(path) {
+function _fetch(path) {
   return new Promise((resolve, reject) => {
     const cwd = process.cwd();
     process.chdir(path);
@@ -80,12 +91,35 @@ function fetch(path) {
   })
 }
 
-function pull(path) {
+function _pull(path) {
   return new Promise((resolve, reject) => {
     const cwd = process.cwd();
     process.chdir(path);
 
     const proc = spawn('git', ['pull']);
+    process.chdir(cwd);
+
+    proc.on('close', code => {
+      if (code === 0) {
+        resolve(code)
+      } else {
+        reject(code)
+      }
+    }); 
+    
+    if (config.__verbose) {
+      proc.stdout.on('data', (data) => console.log(`${data}`));
+    }
+    proc.stderr.on('data', (data) => console.log(`${data}`));
+  })
+}
+
+function _storeCredential(path) {
+  return new Promise((resolve, reject) => {
+    const cwd = process.cwd();
+    process.chdir(path);
+
+    const proc = spawn('git', ['config', 'credential.helper', 'store']);
     process.chdir(cwd);
 
     proc.on('close', code => {
