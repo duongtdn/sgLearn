@@ -27,22 +27,29 @@
                 "learndesk-content-server": "git+https://github.com/duongtdn/learndesk-content-server"
             },
             "sglearn": {
-                "content": {
-                    "content-server": "git+https://github.com/duongtdn/content-server",
-                    "contentdb-dynamodb-driver": "git+https://github.com/duongtdn/contentdb-dynamodb-driver",
-                    "contentdb-test-helper": "git+https://github.com/duongtdn/contentdb-test-helper"
+                "database": {
+                    "content": {
+                        "contentdb-dynamodb-driver": "git+https://github.com/duongtdn/contentdb-dynamodb-driver",
+                        "contentdb-test-helper": "git+https://github.com/duongtdn/contentdb-test-helper"
+                    },
+                    "enroll": {
+                        "enrolldb-dynamodb-driver": "git+https://github.com/duongtdn/enrolldb-dynamodb-driver",
+                        "enrolldb-test-helper": "git+https://github.com/duongtdn/enrolldb-test-helper"
+                    },
+                    "course": {                        
+                        "coursedb-dynamodb-driver": "git+https://github.com/duongtdn/coursedb-dynamodb-driver",
+                        "coursedb-test-helper": "git+https://github.com/duongtdn/coursedb-test-helper"                        
+                    },
+                    "catalog": {
+                        "catalogdb-dynamodb-driver": "git+https://github.com/duongtdn/catalogdb-dynamodb-driver",
+                        "catalogdb-test-helper": "git+https://github.com/duongtdn/catalogdb-test-helper"
+                    }
                 },
-                "enroll": {
-                    "enroll-server": "git+https://github.com/duongtdn/enroll-server",
-                    "enrolldb-dynamodb-driver": "git+https://github.com/duongtdn/enrolldb-dynamodb-driver",
-                    "enrolldb-test-helper": "git+https://github.com/duongtdn/enrolldb-test-helper"
-                },
-                "course": {
+                "web-servers": {
                     "course-server": "git+https://github.com/duongtdn/course-server",
-                    "coursedb-dynamodb-driver": "git+https://github.com/duongtdn/coursedb-dynamodb-driver",
-                    "coursedb-test-helper": "git+https://github.com/duongtdn/coursedb-test-helper",
-                    "catalogdb-dynamodb-driver": "git+https://github.com/duongtdn/catalogdb-dynamodb-driver",
-                    "catalogdb-test-helper": "git+https://github.com/duongtdn/catalogdb-test-helper"
+                    "content-server": "git+https://github.com/duongtdn/content-server",
+                    "enroll-server": "git+https://github.com/duongtdn/enroll-server",
+                    "catalog-server": "git+https://github.com/duongtdn/catalog-server"
                 }
             }
         }        
