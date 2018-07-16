@@ -37,7 +37,7 @@
                     "catalogdb-dynamodb-driver": "git+https://github.com/duongtdn/catalogdb-dynamodb-driver",
                     "catalogdb-test-helper": "git+https://github.com/duongtdn/catalogdb-test-helper"
                 },
-                "web-servers": "git+https://github.com/duongtdn/sglearn-web-server",
+                "sglearn-web-servers": "git+https://github.com/duongtdn/sglearn-web-server",
                 "content-server": "git+https://github.com/duongtdn/content-server"
             }
         }        
