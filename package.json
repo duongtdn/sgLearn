@@ -10,7 +10,6 @@
     "start:quiz": "cd node_modules/quiz-embed && npm start",
     "start:account": "cd node_modules/@stormgle/account-base && npm run local",
     "start:content": "cd node_modules/content-server && npm run local",
-    "start:enroll": "cd node_modules/enroll-server && npm run local",
     "start": "concurrently \"npm run start:account\" \"npm run start:content\" \"npm run start:enroll\" \"npm run start:learndesk:server\" \"npm run start:learndesk:web\" \"npm run start:quiz\" "
   },
   "repository": {
@@ -28,7 +27,6 @@
     "dotenv": "^5.0.1",
     "@stormgle/account-base": "^2.3.0",
     "content-server": "^1.0.0",
-    "enroll-server": "^1.0.0",
     "learndesk-content-server": "^1.0.0",
     "learndesk-web": "^1.0.0",
     "quiz-embed": "^0.1.1"
