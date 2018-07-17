@@ -128,13 +128,13 @@ class Project {
 
     const deps = { ...pck.dependencies, ...pck.devDependencies }
 
-    for (let module in deps) {
-      console.log(` ---> Linking to local module: ${module}`)
-      this._isLocalModules(module) && npm.linkSync(module);
+    for (let module in deps) {      
+      if (this._isLocalModules(module)) {
+        console.log(` ---> Linking to local module: ${module}`)
+        npm.linkSync(module);
+      }
     }
-
-    console.log('Linked local depedencies to the project');
-
+    
     return this;
 
   }

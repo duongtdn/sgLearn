@@ -10,7 +10,7 @@
     "start:quiz": "cd node_modules/quiz-embed && npm start",
     "start:account": "cd node_modules/@stormgle/account-base && npm run local",
     "start:content": "cd node_modules/content-server && npm run local",
-    "start": "concurrently \"npm run start:account\" \"npm run start:content\" \"npm run start:enroll\" \"npm run start:learndesk:server\" \"npm run start:learndesk:web\" \"npm run start:quiz\" "
+    "start": "concurrently \"npm run start:account\" \"npm run start:content\" \"npm run start:learndesk:server\" \"npm run start:learndesk:web\" \"npm run start:quiz\" "
   },
   "repository": {
     "type": "git",
