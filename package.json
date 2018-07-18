@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "setup": "node scripts/setup.js",
+    "sync": "node scripts/sync.js",
     "start:learndesk:server": "cd node_modules/learndesk-content-server && npm start",
     "start:learndesk:web": "cd node_modules/learndesk-web && npm start",
     "start:quiz": "cd node_modules/quiz-embed && npm start",
