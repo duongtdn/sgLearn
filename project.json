@@ -6,6 +6,7 @@
             "accounts": {
                 "account-base": "git+https://github.com/stormgle/account-base",
                 "auth-client": "git+https://github.com/stormgle/auth-client",
+                "react-user":"git+https://github.com/stormgle/react-user",
                 "jtoken-util": "git+https://github.com/stormgle/jtoken-util",
                 "userdb-dynamodb-driver": "git+https://github.com/stormgle/userdb-dynamodb-driver",
                 "userdb-test-helper": "git+https://github.com/stormgle/userdb-test-helper"
