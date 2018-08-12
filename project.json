@@ -36,10 +36,13 @@
                     "coursedb-dynamodb-driver": "git+https://github.com/duongtdn/coursedb-dynamodb-driver",
                     "coursedb-test-helper": "git+https://github.com/duongtdn/coursedb-test-helper",                        
                     "catalogdb-dynamodb-driver": "git+https://github.com/duongtdn/catalogdb-dynamodb-driver",
-                    "catalogdb-test-helper": "git+https://github.com/duongtdn/catalogdb-test-helper"
+                    "catalogdb-test-helper": "git+https://github.com/duongtdn/catalogdb-test-helper",
+                    "invoicedb-dynamodb-driver": "git+https://github.com/duongtdn/invoicedb-dynamodb-driver",
+                    "invoicedb-test-helper": "git+https://github.com/duongtdn/invoicedb-test-helper" 
                 },
                 "sglearn-web-server": "git+https://github.com/duongtdn/sglearn-web-server",
-                "content-server": "git+https://github.com/duongtdn/content-server"
+                "content-server": "git+https://github.com/duongtdn/content-server",
+                "purchase-server": "git+https://github.com/duongtdn/purchase-server"
             }
         }        
     }
