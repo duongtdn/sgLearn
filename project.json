@@ -42,7 +42,8 @@
                 },
                 "sglearn-web-server": "git+https://github.com/duongtdn/sglearn-web-server",
                 "content-server": "git+https://github.com/duongtdn/content-server",
-                "purchase-server": "git+https://github.com/duongtdn/purchase-server"
+                "purchase-server": "git+https://github.com/duongtdn/purchase-server",
+                "enroll-server": "git+https://github.com/duongtdn/enroll-server"
             }
         }        
     }
