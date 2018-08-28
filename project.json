@@ -38,12 +38,15 @@
                     "catalogdb-dynamodb-driver": "git+https://github.com/duongtdn/catalogdb-dynamodb-driver",
                     "catalogdb-test-helper": "git+https://github.com/duongtdn/catalogdb-test-helper",
                     "invoicedb-dynamodb-driver": "git+https://github.com/duongtdn/invoicedb-dynamodb-driver",
-                    "invoicedb-test-helper": "git+https://github.com/duongtdn/invoicedb-test-helper" 
+                    "invoicedb-test-helper": "git+https://github.com/duongtdn/invoicedb-test-helper",
+                    "promodb-dynamodb-driver": "git+https://github.com/duongtdn/promodb-dynamodb-driver",
+                    "promodb-test-helper": "git+https://github.com/duongtdn/promodb-test-helper"
                 },
                 "sglearn-web-server": "git+https://github.com/duongtdn/sglearn-web-server",
                 "content-server": "git+https://github.com/duongtdn/content-server",
                 "purchase-server": "git+https://github.com/duongtdn/purchase-server",
-                "enroll-server": "git+https://github.com/duongtdn/enroll-server"
+                "enroll-server": "git+https://github.com/duongtdn/enroll-server",
+                "promo-server": "git+https://github.com/duongtdn/promo-server"
             }
         }        
     }
