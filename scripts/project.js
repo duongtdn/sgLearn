@@ -149,6 +149,12 @@ class Project {
     }
 
     npm.install();
+
+    this._modules.forEach(module => {
+      console.log(` ---> Linking to local module: ${module}`)
+      npm.linkSync(module);
+    })
+
     console.log('Installed depedencies to the project');
     return this;
   }
