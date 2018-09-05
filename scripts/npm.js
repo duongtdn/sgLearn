@@ -69,4 +69,13 @@ function link(module) {
   })
 }
 
-module.exports = { link, linkSync, unlinkSync, install, installSync }
+function runSync(script) {
+  const command = ['run'];
+  script && command.push(script);
+  const p = spawnSync('npm', command);
+  config.__verbose && console.log(`${p.stdout}`)
+  console.log(`${p.stderr}`)
+  return p;
+}
+
+module.exports = { link, linkSync, unlinkSync, install, installSync, runSync }
