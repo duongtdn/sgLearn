@@ -35,9 +35,11 @@ function rebuild(buildList) {
   const _config = JSON.parse(fp);
   const _dir = _config.directory;      
 
+  const cpath = process.cwd();
 
   _rebuild(`${process.env.HOME}/work`,_dir)
 
+  process.chdir(cpath);
 
 
 
