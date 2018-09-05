@@ -11,7 +11,7 @@
     "start:quiz": "cd node_modules/quiz-embed && npm start",
     "start:account": "cd node_modules/@stormgle/account-base && npm run local",
     "start:content": "cd node_modules/content-server && npm run local",
-    "start": "concurrently \"npm run start:account\" \"npm run start:content\" \"npm run start:learndesk:server\" \"npm run start:learndesk:web\" \"npm run start:quiz\" "
+    "start": "node scripts/start.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/duongtdn/sglearn-project#readme",
   "devDependencies": {
-    "concurrently": "^3.5.1",
     "dotenv": "^5.0.1",
     "@stormgle/account-base": "^2.3.0",
     "content-server": "^1.0.0",
