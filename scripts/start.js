@@ -115,6 +115,7 @@ async function start() {
     {name: 'auth', path: '@stormgle/account-base'},
     {name: 'purchase', path: 'purchase-server'},
     {name: 'enroll', path: 'enroll-server'},
+    {name: 'course', path: 'course-server'},
     {name: 'sgweb', path: 'sglearn-web-server'}
   ])
 
