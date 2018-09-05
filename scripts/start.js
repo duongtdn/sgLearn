@@ -59,13 +59,13 @@ function rebuild(buildList) {
 }
 
 
-function startServers(servers) {
+function startApiServers(servers) {
   servers.forEach(server => {
-    _createServer(server)
+    _createApiServer(server)
   })
 }
 
-function _createServer(server) {
+function _createApiServer(server) {
   const app = require(`${process.cwd()}/node_modules/${server.path}/example/app.local`)
   const PORT = process.env[`${server.name.toUpperCase()}_PORT`];
   const httpServer = require('http').createServer(app);
@@ -74,30 +74,55 @@ function _createServer(server) {
   return this;
 }
 
+function startStaticServer(statics) {
+  const app = require('express');  
+  statics.forEach(s => {
+    app.get(s.uri, (req, res) => {
+      res.sendFile(path.resolve(s.path))
+    })
+  })
+
+  const PORT = process.env.STATIC_PORT;
+  const httpServer = require('http').createServer(app);
+  httpServer.listen(PORT)
+  console.log(`\n# ${Static} is running at http://localhost:${PORT}\n`);
+  return this;
+}
+
 
 
 async function start() {
 
-  // console.log('\n Starting Database... \n')
+  console.log('\n Starting Database... \n')
 
-  // await startDB([
-  //   {name: 'userdb', helper: '@stormgle/userdb-test-helper'},
-  //   {name: 'coursedb', helper: 'coursedb-test-helper'},
-  //   {name: 'catalogdb', helper: 'catalogdb-test-helper'},
-  //   {name: 'enrolldb', helper: 'enrolldb-test-helper'},
-  //   {name: 'invoicedb', helper: 'invoicedb-test-helper'}
-  // ])
+  await startDB([
+    {name: 'userdb', helper: '@stormgle/userdb-test-helper'},
+    {name: 'coursedb', helper: 'coursedb-test-helper'},
+    {name: 'catalogdb', helper: 'catalogdb-test-helper'},
+    {name: 'enrolldb', helper: 'enrolldb-test-helper'},
+    {name: 'invoicedb', helper: 'invoicedb-test-helper'}
+  ])
 
-  console.log('\n Starting Servers... \n')
+  console.log('\n Rebuiding modules... \n')
 
   rebuild(['auth-client', 'react-user', 'sglearn-web-server'])
 
-  // startServers([
-  //   {name: 'auth', path: '@stormgle/account-base'},
-  //   {name: 'purchase', path: 'purchase-server'},
-  //   {name: 'enroll', path: 'enroll-server'},
-  //   {name: 'sgweb', path: 'sglearn-web-server'}
-  // ])
+  console.log('\n Starting API Servers... \n')
+
+  startApiServers([
+    {name: 'auth', path: '@stormgle/account-base'},
+    {name: 'purchase', path: 'purchase-server'},
+    {name: 'enroll', path: 'enroll-server'},
+    {name: 'sgweb', path: 'sglearn-web-server'}
+  ])
+
+  console.log('\n Starting Static Servers... \n')
+
+  startStaticServer([
+    {uri: '/sgw/course.js', path: `${process.env.HOME}/work/packages/sglearn/sglearn-web-server/dist/course.js`},
+    {uri: '/sgw/catalog.js', path: `${process.env.HOME}/work/packages/sglearn/sglearn-web-server/dist/catalog.js`},
+    {uri: '/sgw/enrolled.js', path: `${process.env.HOME}/work/packages/sglearn/sglearn-web-server/dist/enrolled.js`}
+  ])
 
 }
 
