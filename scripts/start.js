@@ -95,7 +95,7 @@ function startStaticServer(statics) {
 
 async function start() {
 
-  console.log('\n Starting Database... \n')
+  console.log('\nStarting Database... \n')
 
   await startDB([
     {name: 'userdb', helper: '@stormgle/userdb-test-helper'},
@@ -105,7 +105,7 @@ async function start() {
     {name: 'invoicedb', helper: 'invoicedb-test-helper'}
   ])
 
-  console.log('\n Rebuiding modules... \n')
+  console.log('\nRebuiding modules... \n')
 
   rebuild(['auth-client', 'react-user', 'sglearn-web-server'])
 
@@ -118,7 +118,7 @@ async function start() {
     {name: 'sgweb', path: 'sglearn-web-server'}
   ])
 
-  console.log('\n Starting Static Servers... \n')
+  console.log('\nStarting Static Servers... \n')
 
   startStaticServer([
     {uri: '/sgw/course.js', path: `${process.env.HOME}/work/packages/sglearn/sglearn-web-server/dist/course.js`},
