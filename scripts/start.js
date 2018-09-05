@@ -77,17 +77,17 @@ function _createApiServer(server) {
 }
 
 function startStaticServer(statics) {
-  const app = require('express');  
+  const app = require('express')();  
   statics.forEach(s => {
     app.get(s.uri, (req, res) => {
-      res.sendFile(path.resolve(s.path))
+      res.sendFile(s.path)
     })
   })
 
   const PORT = process.env.STATIC_PORT;
   const httpServer = require('http').createServer(app);
   httpServer.listen(PORT)
-  console.log(`\n# ${Static} is running at http://localhost:${PORT}\n`);
+  console.log(`\n# Static server is running at http://localhost:${PORT}\n`);
   return this;
 }
 
