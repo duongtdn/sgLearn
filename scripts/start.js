@@ -18,7 +18,6 @@ const project = {
   alias(name, aliasName) {
     this._alias[name] = aliasName;
     this._revertAlias[aliasName] = name;
-    console.log(this._revertAlias)
   },
 
   startDB(tables) {
