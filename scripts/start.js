@@ -131,7 +131,7 @@ const project = {
     const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
-      prompt: ' > '
+      prompt: 'sglearn > '
     });
 
     rl.prompt();
@@ -222,7 +222,7 @@ async function start() {
 
   project.rebuild(['auth-client', 'react-user', 'sglearn-web-server'])
 
-  console.log('\n Starting API Servers... \n')
+  console.log('\nStarting API Servers... \n')
 
   project.startApiServers([
       {name: 'auth', path: '@stormgle/account-base'},
