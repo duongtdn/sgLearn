@@ -12,10 +12,13 @@ const project = {
   _buildList: {},
   _servers: {},
   _alias: {},
+  _revertAlias: {},
   _history: [],
 
   alias(name, aliasName) {
     this._alias[name] = aliasName;
+    this._revertAlias[aliasName] = name;
+    console.log(this._revertAlias)
   },
 
   startDB(tables) {
@@ -175,13 +178,13 @@ const project = {
       if (this._buildList[serverName]) {
         this.rebuild(target)
       }
-      const PORT = process.env[`${target.toUpperCase()}_PORT`];
+      const PORT = this._revertAlias[target] ? process.env[`${ this._revertAlias[target].toUpperCase()}_PORT`] : process.env[`${target.toUpperCase()}_PORT`];
       _server.listen(PORT)
       console.log(`\n# ${serverName} is running at http://localhost:${PORT}\n`);
     }
   },
 
-  _createApiServer(server) {
+  _createApiServer(server) {    
     const app = require(`${process.cwd()}/node_modules/${server.path}/example/app.local`)
     const PORT = process.env[`${server.name.toUpperCase()}_PORT`];
     const httpServer = require('http').createServer(app);
