@@ -124,25 +124,34 @@ const project = {
   waitingUserCommand() {
 
     console.log('Waiting for command...\n')
-    process.stdout.write(' > ');
 
-    const stdin = process.openStdin();
+    const readline = require('readline');
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+      prompt: ' > '
+    });
 
-    stdin.addListener("data", (data) => {
-      const {command, target} = this._parseCommand(data.toString().trim().replace(/\s+/g, " "))
-      
-      if (command === 'rebuild') {
-        this.rebuild(target)
+    rl.prompt();
+
+    rl.on('line', (line) => {
+      const {command, target} = this._parseCommand(line.toString().trim().replace(/\s+/g, " "))
+      switch (command) {
+        case 'rebuild':
+          this.rebuild(target)
+          break;
+        case 'restart':
+          this._restart(target)
+          break;
+        default:
+          console.log(`Invalid command`);
+          break;
       }
-
-      if (command === 'restart') {
-        this._restart(target)
-      }
-
-      console.log('Waiting for command...\n')
-      process.stdout.write(' > ');
-
-    })
+      rl.prompt();
+    }).on('close', () => {
+      console.log('Have a great day!');
+      process.exit(0);
+    });
 
   },
 
