@@ -10,8 +10,9 @@ const npm = require('./npm')
 const project = {
   _tables: [],
   _buildList: {},
-  _apiServers: [],
+  _servers: {},
   _alias: {},
+  _history: [],
 
   alias(name, aliasName) {
     this._alias[name] = aliasName;
@@ -49,7 +50,7 @@ const project = {
     }
 
     if (typeof buildList === 'string') {
-      const module = buildList;
+      const module = this._alias[buildList] || buildList;
       if (this._buildList[module]) {
         const target = this._buildList[module];
         _build(target);
@@ -93,11 +94,10 @@ const project = {
   },
 
 
-  startApiServers(servers) {
-    this._apiServers = servers;
-
+  startApiServers(servers) {    
     servers.forEach(server => {
-      _createApiServer(server)
+      const serverName = this._alias[server.name] || server.name;
+      this._servers[serverName] = this._createApiServer(server)      
     })
 
   },
@@ -115,6 +115,9 @@ const project = {
     const httpServer = require('http').createServer(app);
     httpServer.listen(PORT)
     console.log(`\n# Static server is running at http://localhost:${PORT}\n`);
+
+    this._servers['static-server'] = httpServer;
+
     return this;
   },
 
@@ -149,33 +152,50 @@ const project = {
     
     const command = splittedCmd[0];
     
-    const target = this._alias[splittedCmd[1]] || splittedCmd[1];
+    const target = splittedCmd[1];
 
     return { command, target }
 
   },
 
   _restart(target) {
-    
+    const serverName = this._alias[target] || target;
+    if (this._servers[serverName]) {
+      const _server = this._servers[serverName];
+      _server.close();
+      if (this._buildList[serverName]) {
+        this.rebuild(target)
+      }
+      const PORT = process.env[`${target.toUpperCase()}_PORT`];
+      _server.listen(PORT)
+      console.log(`\n# ${serverName} is running at http://localhost:${PORT}\n`);
+    }
+  },
+
+  _createApiServer(server) {
+    const app = require(`${process.cwd()}/node_modules/${server.path}/example/app.local`)
+    const PORT = process.env[`${server.name.toUpperCase()}_PORT`];
+    const httpServer = require('http').createServer(app);
+    httpServer.listen(PORT)
+    console.log(`\n# ${this._alias[server.name] || server.name} is running at http://localhost:${PORT}\n`);
+    return httpServer;
   }
 
 }
 
 
 
-function _createApiServer(server) {
-  const app = require(`${process.cwd()}/node_modules/${server.path}/example/app.local`)
-  const PORT = process.env[`${server.name.toUpperCase()}_PORT`];
-  const httpServer = require('http').createServer(app);
-  httpServer.listen(PORT)
-  console.log(`\n# ${server.path} is running at http://localhost:${PORT}\n`);
-  return this;
-}
 
 
 async function start() {
 
   project.alias('sgw', 'sglearn-web-server');
+  project.alias('auth', 'account-base');
+  project.alias('purchase', 'purchase-server');
+  project.alias('enroll', 'enroll-server');
+  project.alias('course', 'course-server');
+  project.alias('static', 'static-server');
+
 
   console.log('\nStarting Database... \n')
 
@@ -198,7 +218,7 @@ async function start() {
       {name: 'purchase', path: 'purchase-server'},
       {name: 'enroll', path: 'enroll-server'},
       {name: 'course', path: 'course-server'},
-      {name: 'sgweb', path: 'sglearn-web-server'}
+      {name: 'sgw', path: 'sglearn-web-server'}
     ])
 
 
