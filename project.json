@@ -45,6 +45,9 @@
                 "purchase-server": "git+https://github.com/duongtdn/purchase-server",
                 "enroll-server": "git+https://github.com/duongtdn/enroll-server",
                 "course-server": "git+https://github.com/duongtdn/course-server"
+            },
+            "admin": {
+                "admin-dashboard": "git+https://github.com/duongtdn/admin-dashboard"
             }
         }        
     }
