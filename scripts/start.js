@@ -99,7 +99,10 @@ const project = {
   startApiServers(servers) {    
     servers.forEach(server => {
       const serverName = this._alias[server.name] || server.name;
-      this._servers[serverName] = this._createApiServer(server)      
+      this._servers[serverName] = {
+        __httpServer: this._createApiServer(server),
+        __apiPath: server.path
+      } 
     })
 
   },
@@ -118,7 +121,10 @@ const project = {
     httpServer.listen(PORT)
     console.log(`\n# Static server is running at http://localhost:${PORT}\n`);
 
-    this._servers['static-server'] = httpServer;
+    this._servers['static-server'] = {
+      __httpServer: httpServer,
+      __apiPath: ''
+    };
 
     return this;
   },
@@ -136,14 +142,14 @@ const project = {
 
     rl.prompt();
 
-    rl.on('line', (line) => {
+    rl.on('line', async (line) => {
       const {command, target} = this._parseCommand(line.toString().trim().replace(/\s+/g, " "))
       switch (command) {
         case 'rebuild':
           this.rebuild(target)
           break;
         case 'restart':
-          this._restart(target)
+          await this._restart(target)
           break;
         default:
           console.log(`Invalid command`);
@@ -170,21 +176,36 @@ const project = {
   },
 
   _restart(target) {
-    const serverName = this._alias[target] || target;
-    if (this._servers[serverName]) {
-      const _server = this._servers[serverName];
-      _server.close();
-      if (this._buildList[serverName]) {
-        this.rebuild(target)
+    return new Promise((resolve, reject) => {
+      const serverName = this._alias[target] || target;
+      if (this._servers[serverName]) {
+        const _server = this._servers[serverName].__httpServer;
+        console.log(`# closing ${serverName}`)
+        _server.close(() => {
+          console.log(`# closed ${serverName}`)
+          if (this._buildList[serverName]) {
+            this.rebuild(target)
+          }
+          const server = {
+            name: this._revertAlias[target] || target,
+            path: this._servers[serverName].__apiPath
+          };
+          this._servers[serverName] = {
+            __httpServer: this._createApiServer(server),
+            __apiPath: server.path
+          }
+          resolve();
+        }); 
+      } else {
+        reject('server not found')
       }
-      const PORT = this._revertAlias[target] ? process.env[`${ this._revertAlias[target].toUpperCase()}_PORT`] : process.env[`${target.toUpperCase()}_PORT`];
-      _server.listen(PORT)
-      console.log(`\n# ${serverName} is running at http://localhost:${PORT}\n`);
-    }
+    })
+    
   },
 
   _createApiServer(server) {    
-    const app = require(`${process.cwd()}/node_modules/${server.path}/example/app.local`)
+    const api = `${process.cwd()}/node_modules/${server.path}/example/app.local`;
+    const app = require(api)
     const PORT = process.env[`${server.name.toUpperCase()}_PORT`];
     const httpServer = require('http').createServer(app);
     httpServer.listen(PORT)
@@ -220,7 +241,11 @@ async function start() {
 
   console.log('\nRebuiding modules... \n')
 
-  project.rebuild(['auth-client', 'react-user', 'sglearn-web-server'])
+  project.rebuild([
+    'auth-client', 
+    'react-user', 
+    'sglearn-web-server'
+  ])
 
   console.log('\nStarting API Servers... \n')
 
