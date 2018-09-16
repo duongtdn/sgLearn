@@ -47,7 +47,8 @@
                 "course-server": "git+https://github.com/duongtdn/course-server"
             },
             "admin": {
-                "admin-dashboard": "git+https://github.com/duongtdn/admin-dashboard"
+                "dashboard-server": "git+https://github.com/duongtdn/dashboard-server",
+                "dashboard-web": "git+https://github.com/duongtdn/dashboard-web"
             }
         }        
     }
