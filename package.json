@@ -11,7 +11,8 @@
     "start:quiz": "cd node_modules/quiz-embed && npm start",
     "start:account": "cd node_modules/@stormgle/account-base && npm run local",
     "start:content": "cd node_modules/content-server && npm run local",
-    "start": "node scripts/start.js"
+    "start": "node scripts/start.js",
+    "reset": "docker stop $(docker ps -aq)"
   },
   "repository": {
     "type": "git",
