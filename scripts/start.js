@@ -226,6 +226,8 @@ async function start() {
   project.alias('purchase', 'purchase-server');
   project.alias('enroll', 'enroll-server');
   project.alias('course', 'course-server');
+  project.alias('dashboard', 'dashboard-server');
+  project.alias('content', 'content-server');
   project.alias('static', 'static-server');
 
 
@@ -236,7 +238,8 @@ async function start() {
       {name: 'coursedb', helper: 'coursedb-test-helper'},
       {name: 'catalogdb', helper: 'catalogdb-test-helper'},
       {name: 'enrolldb', helper: 'enrolldb-test-helper'},
-      {name: 'invoicedb', helper: 'invoicedb-test-helper'}
+      {name: 'invoicedb', helper: 'invoicedb-test-helper'},
+      {name: 'contentdb', helper: 'contentdb-test-helper'}
     ])
 
   console.log('\nRebuiding modules... \n')
@@ -244,7 +247,11 @@ async function start() {
   project.rebuild([
     'auth-client', 
     'react-user', 
-    'sglearn-web-server'
+    // 'sglearn-web-server',
+    'content-presenter',
+    'quiz-player-plugin',
+    'youtube-player-plugin',
+    'quiz-embed'
   ])
 
   console.log('\nStarting API Servers... \n')
@@ -254,7 +261,9 @@ async function start() {
       {name: 'purchase', path: 'purchase-server'},
       {name: 'enroll', path: 'enroll-server'},
       {name: 'course', path: 'course-server'},
-      {name: 'sgw', path: 'sglearn-web-server'}
+      // {name: 'sgw', path: 'sglearn-web-server'},
+      {name: 'dashboard', path: 'dashboard-server'},
+      {name: 'content', path: 'learndesk-content-server'},
     ])
 
 
@@ -263,7 +272,15 @@ async function start() {
   project.startStaticServer([
     {uri: '/sgw/course.js', path: `${process.env.HOME}/work/packages/sglearn/sglearn-web-server/dist/course.js`},
     {uri: '/sgw/catalog.js', path: `${process.env.HOME}/work/packages/sglearn/sglearn-web-server/dist/catalog.js`},
-    {uri: '/sgw/enrolled.js', path: `${process.env.HOME}/work/packages/sglearn/sglearn-web-server/dist/enrolled.js`}
+    {uri: '/sgw/enrolled.js', path: `${process.env.HOME}/work/packages/sglearn/sglearn-web-server/dist/enrolled.js`},
+    
+    {uri: '/quiz/quiz_api.js', path: `${process.env.HOME}/work/packages/learndesk/quiz-embed/build/api.bundle.js`},
+    {uri: '/quiz/player.bundle.js', path: `${process.env.HOME}/work/packages/learndesk/quiz-embed/build/player.bundle.js`},
+    {uri: '/quiz/index.html', path: `${process.env.HOME}/work/packages/learndesk/quiz-embed/example/index.html`},
+    {uri: '/quiz/quiz.css', path: `${process.env.HOME}/work/packages/learndesk/quiz-embed/example/css/quiz.css`},
+
+    {uri: '/ldw/app.css', path: `${process.env.HOME}/work/packages/learndesk/learndesk-web/src/css/app.css`},
+    
   ])
 
 
