@@ -228,6 +228,7 @@ async function start() {
   project.alias('course', 'course-server');
   project.alias('dashboard', 'dashboard-server');
   project.alias('content', 'content-server');
+  project.alias('progress', 'progress-server');
   project.alias('static', 'static-server');
 
 
@@ -239,7 +240,8 @@ async function start() {
       {name: 'catalogdb', helper: 'catalogdb-test-helper'},
       {name: 'enrolldb', helper: 'enrolldb-test-helper'},
       {name: 'invoicedb', helper: 'invoicedb-test-helper'},
-      {name: 'contentdb', helper: 'contentdb-test-helper'}
+      {name: 'contentdb', helper: 'contentdb-test-helper'},
+      {name: 'progressdb', helper: 'progressdb-test-helper'}
     ])
 
   console.log('\nRebuiding modules... \n')
@@ -264,6 +266,7 @@ async function start() {
       // {name: 'sgw', path: 'sglearn-web-server'},
       {name: 'dashboard', path: 'dashboard-server'},
       {name: 'content', path: 'learndesk-content-server'},
+      {name: 'progress', path: 'progress-server'},
     ])
 
 
