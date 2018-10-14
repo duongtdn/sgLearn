@@ -18,39 +18,61 @@
             "utils": {
                 "express-api-binder": "git+https://github.com/duongtdn/express-api-binder",                
                 "simple-json-xhr": "git+https://github.com/duongtdn/simple-json-xhr"
-            },
-            "learndesk": {
-                "learndesk-web": "git+https://github.com/duongtdn/learndesk-web",
-                "content-presenter": "git+https://github.com/duongtdn/content-presenter",
-                "youtube-player-plugin": "git+https://github.com/duongtdn/youtube-player-plugin",
-                "quiz-player-plugin": "git+https://github.com/duongtdn/quiz-player-plugin",
-                "quiz-embed": "git+https://github.com/duongtdn/quiz-embed",
-                "learndesk-content-server": "git+https://github.com/duongtdn/learndesk-content-server",
-                "contentdb-dynamodb-driver": "git+https://github.com/duongtdn/contentdb-dynamodb-driver",
-                "contentdb-test-helper": "git+https://github.com/duongtdn/contentdb-test-helper",
-                "progress-server": "git+https://github.com/duongtdn/progress-server",
-                "progressdb-dynamodb-driver": "git+https://github.com/duongtdn/progressdb-dynamodb-driver",
-                "progressdb-test-helper": "git+https://github.com/duongtdn/progressdb-test-helper"
-            },
+            }
+        },
+        "workspace": {
             "sglearn": {
-                "database": {
-                    "enrolldb-dynamodb-driver": "git+https://github.com/duongtdn/enrolldb-dynamodb-driver",
-                    "enrolldb-test-helper": "git+https://github.com/duongtdn/enrolldb-test-helper",
-                    "coursedb-dynamodb-driver": "git+https://github.com/duongtdn/coursedb-dynamodb-driver",
-                    "coursedb-test-helper": "git+https://github.com/duongtdn/coursedb-test-helper",                        
-                    "catalogdb-dynamodb-driver": "git+https://github.com/duongtdn/catalogdb-dynamodb-driver",
-                    "catalogdb-test-helper": "git+https://github.com/duongtdn/catalogdb-test-helper",
-                    "invoicedb-dynamodb-driver": "git+https://github.com/duongtdn/invoicedb-dynamodb-driver",
-                    "invoicedb-test-helper": "git+https://github.com/duongtdn/invoicedb-test-helper"
+                "learndesk": {
+                    "client": {
+                        "learndesk-web": "git+https://github.com/sglearn/learndesk-web",
+                        "content-presenter": "git+https://github.com/sglearn/content-presenter",
+                        "youtube-player-plugin": "git+https://github.com/sglearn/youtube-player-plugin",
+                        "quiz-player-plugin": "git+https://github.com/sglearn/quiz-player-plugin"
+                    },
+                    "cdn": {
+                        "quiz-embed": "git+https://github.com/sglearn/quiz-embed"
+                    },
+                    "server": {
+                        "learndesk-content-server": "git+https://github.com/sglearn/learndesk-content-server",
+                        "progress-server": "git+https://github.com/sglearn/progress-server"
+                    },
+                    "database": {
+                        "contentdb-dynamodb-driver": "git+https://github.com/sglearn/contentdb-dynamodb-driver",
+                        "contentdb-test-helper": "git+https://github.com/sglearn/contentdb-test-helper",
+                        "progressdb-dynamodb-driver": "git+https://github.com/sglearn/progressdb-dynamodb-driver",
+                        "progressdb-test-helper": "git+https://github.com/sglearn/progressdb-test-helper"
+                    }
                 },
-                "sglearn-web-server": "git+https://github.com/duongtdn/sglearn-web-server",
-                "purchase-server": "git+https://github.com/duongtdn/purchase-server",
-                "enroll-server": "git+https://github.com/duongtdn/enroll-server",
-                "course-server": "git+https://github.com/duongtdn/course-server"
-            },
-            "admin": {
-                "dashboard-server": "git+https://github.com/duongtdn/dashboard-server",
-                "dashboard-web": "git+https://github.com/duongtdn/dashboard-web"
+                "expiup": {
+                    "database": {
+                        "enrolldb-dynamodb-driver": "git+https://github.com/sglearn/enrolldb-dynamodb-driver",
+                        "enrolldb-test-helper": "git+https://github.com/sglearn/enrolldb-test-helper",
+                        "coursedb-dynamodb-driver": "git+https://github.com/sglearn/coursedb-dynamodb-driver",
+                        "coursedb-test-helper": "git+https://github.com/sglearn/coursedb-test-helper",                        
+                        "catalogdb-dynamodb-driver": "git+https://github.com/sglearn/catalogdb-dynamodb-driver",
+                        "catalogdb-test-helper": "git+https://github.com/sglearn/catalogdb-test-helper",
+                        "invoicedb-dynamodb-driver": "git+https://github.com/sglearn/invoicedb-dynamodb-driver",
+                        "invoicedb-test-helper": "git+https://github.com/sglearn/invoicedb-test-helper"
+                    },
+                    "server": {
+                        "web-server": "git+https://github.com/sglearn/web-server",
+                        "purchase-server": "git+https://github.com/sglearn/purchase-server",
+                        "enroll-server": "git+https://github.com/sglearn/enroll-server",
+                        "course-server": "git+https://github.com/sglearn/course-server"
+                    } 
+                },
+                "admin": {
+                    "dashboard-server": "git+https://github.com/sglearn/dashboard-server",
+                    "dashboard-web": "git+https://github.com/sglearn/dashboard-web"
+                }
+            }
+        },
+        "deployment": {
+            "sglearn": {
+                "aws": {
+                    "account-base-aws": "git+https://github.com/stormgle/account-base-aws",
+                    "aws-email-reset-password": "git+https://github.com/sglearn/aws-email-reset-password"
+                }
             }
         }        
     }
