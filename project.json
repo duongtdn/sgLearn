@@ -71,7 +71,9 @@
             "sglearn": {
                 "aws": {
                     "account-base-aws": "git+https://github.com/stormgle/account-base-aws",
-                    "aws-email-reset-password": "git+https://github.com/sglearn/aws-email-reset-password"
+                    "aws-email-reset-password": "git+https://github.com/sglearn/aws-email-reset-password",
+                    "aws-email-verify-email": "git+https://github.com/sglearn/aws-email-verify-email",
+                    "aws-web-server": "git+https://github.com/sglearn/aws-web-server"
                 }
             }
         }        
